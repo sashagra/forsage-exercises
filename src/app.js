@@ -1,6 +1,6 @@
 import {promptGameOptions, btnAddListerers} from './interface';
 import {makeExercises} from './makeExercises';
-import {orders} from './orders';
+import {orders, ordersArr} from './orders';
 
 const {DIGITS, NUM_OF_TERMS} = promptGameOptions();
 makeExercises(DIGITS, NUM_OF_TERMS, orders);
@@ -8,7 +8,10 @@ makeExercises(DIGITS, NUM_OF_TERMS, orders);
 
 btnAddListerers({
     restartFunc() {
-        orders.with10 = ['without10']
+        const orders = {
+            'ten': [],
+            'five': []
+        }
         makeExercises(DIGITS, NUM_OF_TERMS, orders);
     },
     newGameFunc()  {
