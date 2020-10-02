@@ -1,0 +1,20 @@
+.exercise {
+    width: 400px;
+    padding-top: 40px;
+    margin: auto;
+    font-size: 70px;
+}
+
+.start {
+    margin-top: 20px;
+    font-size: x-large;
+    width: 300px;
+    text-align: center;
+    cursor: pointer;
+    border: 5px solid violet;
+}
+
+.start:hover {
+    background-color: violet;
+    color: white;
+}

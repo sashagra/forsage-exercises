@@ -1,20 +1,66 @@
 const path = require('path')
-const HTMLPlugin = require('html-webpack-plugin')
+const HTMLWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
-    entry: './src/app.js',
+    context: path.resolve(__dirname, 'src'),
+    mode: 'development',
+    entry: {
+        main: './index.js'
+    },
     output: {
-        filename: 'bundle.[chunkhash].js',
-        path: path.resolve(__dirname, 'public')
+        filename: '[name].[contenthash].js',
+        path: path.resolve(__dirname, 'dist')
     },
     devServer: {
-        port: 3000
+        port: 4200
     },
     plugins: [
-        new HTMLPlugin({
-            template: './src/index.html'
+        new HTMLWebpackPlugin({
+            template: './index.html'
         }),
-        new CleanWebpackPlugin
-    ]
+        new CleanWebpackPlugin(),
+        // new CopyWebpackPlugin({
+        //     patterns: [
+        //         {
+        //             from: path.resolve(__dirname, 'src/favicon.ico'),
+        //             to: path.resolve(__dirname, 'dist')
+        //         }
+        //     ]
+        // }),
+        new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css',
+            chunkFilename: '[id].css',
+        })
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: [{
+                    loader: MiniCssExtractPlugin.loader,
+                    options: {},
+                  },
+                  'css-loader']
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: ['file-loader']
+            },
+            {
+                test: /\.(ttf|woff|woff2|eot)$/,
+                use: ['file-loader']
+            },
+            {
+                test: /\.xml$/,
+                use: ['xml-loader']
+            },
+            {
+                test: /\.csv$/,
+                use: ['csv-loader']
+            },
+        ]
+    }
 }
